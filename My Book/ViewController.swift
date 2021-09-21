@@ -13,16 +13,26 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     @IBOutlet weak var searchTexField: UITextField!
     @IBOutlet weak var segmentState: UISegmentedControl!
     @IBOutlet weak var changeSearchButton: UIButton!
+    
+    
+    //        bookListTableView.reloadData() dar actione text
+
+    
+    
     @IBAction func changeSearchButtonTapped(_ sender: Any) {
         if changeSearchButton.currentImage == UIImage(systemName: "person") {
-            changeSearchButton.setImage(UIImage(systemName: "person"), for: .normal)
-            textUpdaterByFilter = "+inauthor"
-        } else if changeSearchButton.currentImage == UIImage(systemName: "book.closed") {
             changeSearchButton.setImage(UIImage(systemName: "book.closed"), for: .normal)
+            textUpdaterByFilter = "+intitle"
+        } else if changeSearchButton.currentImage == UIImage(systemName: "person") {
+            changeSearchButton.setImage(UIImage(systemName: ""), for: .normal)
             textUpdaterByFilter = "+inauthor"
         }
     }
+    
     @IBAction func searchByFilterSegment(_ sender: Any) {
+        
+        
+        
     }
     
     var books = [Items]()
@@ -42,28 +52,19 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         overrideUserInterfaceStyle = .light
         bookListTableView.keyboardDismissMode = .onDrag
         getDataFromApi()
-
-        
-        
-        
-        
     }
     
     func segmentManagement() {
         if segmentState.selectedSegmentIndex == 0 {
-            //stars
             books = books.sorted(by: { firstItem, SecondItem in
                 firstItem.volumeInfo.pageCount! < SecondItem.volumeInfo.pageCount!
             })
         } else if segmentState.selectedSegmentIndex == 1 {
-            // forks
             books = books.sorted(by: { firstItem, SecondItem in
                 firstItem.volumeInfo.ratingCount! < SecondItem.volumeInfo.ratingCount!
             })
         }
-        bookListTableView.reloadData()
     }
-
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return books.count
@@ -97,6 +98,7 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     //https://www.googleapis.com/books/v1/volumes?q=+intitle
     
     func getDataFromApi() {
+        //searchedItems
         let urlString =  "https://www.googleapis.com/books/v1/volumes?q=\(searchedItems)+\(textUpdaterByFilter)"
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
