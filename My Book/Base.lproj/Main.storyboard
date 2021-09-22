@@ -41,7 +41,6 @@
                                             <constraint firstAttribute="width" secondItem="IyP-Zc-fqr" secondAttribute="height" id="3Bh-d6-7I4"/>
                                             <constraint firstAttribute="width" constant="50" id="PTY-yV-z03"/>
                                         </constraints>
-                                        <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="changeSearchButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GEL-ie-fJb"/>
                                         </connections>
@@ -133,6 +132,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="R4S-S2-hWS" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nPU-OM-t2M">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

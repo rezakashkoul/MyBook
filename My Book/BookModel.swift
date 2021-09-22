@@ -27,6 +27,7 @@ struct VolumeInfo : Codable {
     var authors : [String]?
     var pageCount : Int?
     var ratingCount : Int?
+    var averageRating : Int?
     var imageLinks : ImageLink?
 }
 struct ImageLink : Codable {
