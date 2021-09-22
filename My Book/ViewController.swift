@@ -13,24 +13,15 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     @IBOutlet weak var searchTexField: UITextField!
     @IBOutlet weak var segmentState: UISegmentedControl!
     @IBOutlet weak var changeSearchButton: UIButton!
-     
-    //        bookListTableView.reloadData() dar actione text
-    
-    
-    
-    let iconImage = UIImage(systemName: "person",
-                            withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .regular, scale: .medium))
+    @IBAction func textFieldValueChanged(_ sender: UITextField) {
+        doSearch()
+    }
     
     @IBAction func changeSearchButtonTapped(_ sender: Any) {
         if changeSearchButton.currentImage == UIImage(systemName: "person") {
             searchTexField.placeholder = "Search by book title!"
             changeSearchButton.setImage(UIImage(systemName: "book.closed"), for: .normal)
             textUpdaterByFilter = "+intitle"
-            
-            
-            //            changeSearchButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 16, weight: .regular, scale: .medium), forImageIn: .normal)
-            
-            
         } else {
             changeSearchButton.setImage(UIImage(systemName: "person"), for: .normal)
             searchTexField.placeholder = "Search by book Author!"
@@ -41,8 +32,6 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     
     @IBAction func searchByFilterSegment(_ sender: Any) {
         
-        
-        
     }
     
     var books = [Items]()
@@ -52,16 +41,17 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         searchTexField.delegate = self
         bookListTableView.delegate = self
         bookListTableView.dataSource = self
         bookListTableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "tableViewCell")
         performSearch()
+        
         segmentState.selectedSegmentIndex = 1
         segmentManagement()
         overrideUserInterfaceStyle = .light
         bookListTableView.keyboardDismissMode = .onDrag
+        textUpdaterByFilter = "+inauthor"
         changeSearchButton.setImage(UIImage(systemName: "book.closed"), for: .normal)
         changeSearchButton.layer.cornerRadius = 5
         changeSearchButton.layer.borderWidth = 2
@@ -78,6 +68,16 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
                 firstItem.volumeInfo.averageRating! < SecondItem.volumeInfo.ratingCount!
             })
         }
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? BookDetailController
+        let newPage = storyboard?.instantiateViewController(identifier: "resultPage") as! BookDetailController
+        //newPage.dataForToDetail = self.books[indexPath.row]
+        navigationController?.pushViewController(newPage, animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -105,50 +105,47 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
             cell.avarageRatingStackView.isHidden = false
             cell.avarageRatingDataLabel.text = books[indexPath.row].volumeInfo.averageRating?.description
         } else {
-            cell.avarageRatingDataLabel.text = books[indexPath.row].volumeInfo.averageRating?.description
+            cell.avarageRatingStackView.isHidden = true
         }
         
-        let urlString = books[indexPath.row].volumeInfo.imageLinks?.smallThumbnail!
-        guard let url = URL(string: urlString!) else { return cell}
-        let getDataTask = URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data , error == nil else {
-                return
-            }
-            DispatchQueue.main.async {
-                let image = UIImage(data: data)
-                
-                
-                if (self.books[indexPath.row].volumeInfo.imageLinks?.smallThumbnail!) != nil {
-                    cell.bookImage.isHidden = false
-                    cell.bookImage!.image = image
-                    
-                } else {
-                    cell.bookImage.isHidden = true
-                }
-                
-                
-                cell.bookImage!.image = image
-            }
+        if let smallThumbnail = self.books[indexPath.row].volumeInfo.imageLinks?.smallThumbnail {
+            cell.bookImage.isHidden = false
+            //                    cell.bookImage!.image = image
+            guard let url = URL(string: smallThumbnail) else { return cell}
+            //            let getDataTask = URLSession.shared.dataTask(with: url) { data, _, error in
+            //                guard let data = data , error == nil else {
+            //                    return
+            //                }
+            //                DispatchQueue.main.async {
+            //                    let image = UIImage(data: data)
+            //                    cell.bookImage?.image = image
+            //                }
+            //            }
+            //            getDataTask.resume()
+        } else {
+            cell.bookImage.isHidden = true
         }
-        getDataTask.resume()
-        
         return cell
     }
-    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //textField code
         textField.resignFirstResponder()
-        
-        if searchTexField.text!.count > 3 {
-            performSearch()
-        }
+        performSearch()
         return true
     }
     
+    func doSearch() {
+        if self.searchTexField.text != nil {
+            if searchTexField.text!.count >= 3 {
+                getDataFromApi()
+            }
+        }
+    }
     
     func performSearch() {
         getDataFromApi()
+        bookListTableView.reloadData()
     }
     
     //for author
@@ -156,8 +153,6 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     
     //for title
     //https://www.googleapis.com/books/v1/volumes?q=+intitle
-    
-    
     
     //https://www.googleapis.com/books/v1/volumes?q=flower+inauthor
     func getDataFromApi() {
@@ -177,16 +172,5 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
             bookListTableView.reloadData()
         }
     }
-    
 }
-enum AssetsColor: String {
-    case bookColor
-    case borderColor
-    case segmentColor
-    case tabBarColor
-}
-extension UIColor {
-    static func appColor(_ name: AssetsColor) -> UIColor? {
-        return UIColor(named: name.rawValue)
-    }
-}
+
