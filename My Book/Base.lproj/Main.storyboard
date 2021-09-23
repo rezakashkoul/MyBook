@@ -119,7 +119,7 @@
         <!--Book Detail Controller-->
         <scene sceneID="I3U-IB-g6C">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" id="jEh-0G-OvA" customClass="BookDetailController" customModule="My_Book" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BookDetailController" id="jEh-0G-OvA" customClass="BookDetailController" customModule="My_Book" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Xrs-S0-IMN">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

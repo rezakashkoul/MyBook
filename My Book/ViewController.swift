@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSource , UITextFieldDelegate {
     
     @IBOutlet weak var bookListTableView: UITableView!
@@ -35,8 +36,11 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     }
     
     var books = [Items]()
+    
     var searchedItems = String()
     var textUpdaterByFilter = String()
+    //  let myindexPath = bookListTableView.indexPathForRowAtPoint(point)
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +52,7 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         performSearch()
         
         segmentState.selectedSegmentIndex = 1
-        segmentManagement()
+       // segmentManagement()
         overrideUserInterfaceStyle = .light
         bookListTableView.keyboardDismissMode = .onDrag
         textUpdaterByFilter = "+inauthor"
@@ -58,25 +62,42 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         changeSearchButton.layer.borderColor = UIColor.appColor(.borderColor)?.cgColor
     }
     
-    func segmentManagement() {
-        if segmentState.selectedSegmentIndex == 0 {
-            books = books.sorted(by: { firstItem, SecondItem in
-                firstItem.volumeInfo.pageCount! < SecondItem.volumeInfo.pageCount!
-            })
-        } else if segmentState.selectedSegmentIndex == 1 {
-            books = books.sorted(by: { firstItem, SecondItem in
-                firstItem.volumeInfo.averageRating! < SecondItem.volumeInfo.ratingCount!
-            })
-        }
-    }
+//    func segmentManagement() {
+//        if segmentState.selectedSegmentIndex == 0 {
+//            books = books.sorted(by: { firstItem, SecondItem in
+//                firstItem.volumeInfo.pageCount! < SecondItem.volumeInfo.pageCount!
+//            })
+//        } else if segmentState.selectedSegmentIndex == 1 {
+//            books = books.sorted(by: { firstItem, SecondItem in
+//                firstItem.volumeInfo.averageRating! < SecondItem.volumeInfo.ratingCount!
+//            })
+//        }
+//    }
     
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? BookDetailController
-        let newPage = storyboard?.instantiateViewController(identifier: "resultPage") as! BookDetailController
-        //newPage.dataForToDetail = self.books[indexPath.row]
-        navigationController?.pushViewController(newPage, animated: true)
+        let newPage = storyboard?.instantiateViewController(withIdentifier: "BookDetailController") as? BookDetailController
+        
+        if let showImage = books[indexPath.row].volumeInfo.imageLinks?.smallThumbnail
+        {
+            newPage?.passedImage = showImage
+        } else {
+            newPage?.bigImage.isHidden = true
+        }
+        if let showDownloadLink = books[indexPath.row].accessInfo.epub?.downloadLink {
+            newPage?.passedDownloadLink = showDownloadLink
+        } else {
+            //newPage?.downloadLinkDataLabel.isHidden = true
+
+        }
+//        if let showAthors = books[indexPath.row].volumeInfo.authors {
+//            newPage?.authorsListDataLabel.text = showAthors[indexPath.row]
+//        } else {
+//            newPage?.authorsListDataLabel.isHidden = true
+//        }
+        
+        present(newPage!, animated: true, completion: nil)
         
     }
     
@@ -110,18 +131,18 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         
         if let smallThumbnail = self.books[indexPath.row].volumeInfo.imageLinks?.smallThumbnail {
             cell.bookImage.isHidden = false
-            //                    cell.bookImage!.image = image
+            //            cell.bookImage!.image = image
             guard let url = URL(string: smallThumbnail) else { return cell}
-            //            let getDataTask = URLSession.shared.dataTask(with: url) { data, _, error in
-            //                guard let data = data , error == nil else {
-            //                    return
-            //                }
-            //                DispatchQueue.main.async {
-            //                    let image = UIImage(data: data)
-            //                    cell.bookImage?.image = image
-            //                }
-            //            }
-            //            getDataTask.resume()
+            let getDataTask = URLSession.shared.dataTask(with: url) { data, _, error in
+                guard let data = data , error == nil else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    let image = UIImage(data: data)
+                    cell.bookImage?.image = image
+                }
+            }
+            getDataTask.resume()
         } else {
             cell.bookImage.isHidden = true
         }

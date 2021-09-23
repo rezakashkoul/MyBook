@@ -7,25 +7,30 @@
 
 import UIKit
 
+
 class BookDetailController: UIViewController {
 
-    
+
     @IBOutlet weak var bigImage: UIImageView!
     @IBOutlet weak var downloadLinkDataLabel: UILabel!
-    
     @IBOutlet weak var authorsListDataLabel: UILabel!
-    
     @IBOutlet weak var FavoriteOutletButton: UIButton!
     @IBAction func addAndRemoveFavoriteButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
 
     }
     
-    var dataForToDetail = [Items]()
-    
+    var passedImage = String()
+    var passedDownloadLink = String()
+    var passedAthors = String()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        bigImage.image = UIImage(named: "\(passedImage)")
+        downloadLinkDataLabel.text = passedDownloadLink
+        authorsListDataLabel.text = passedAthors
+        
         FavoriteOutletButton.layer.cornerRadius = FavoriteOutletButton.bounds.height / 2
     
     }

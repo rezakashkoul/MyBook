@@ -25,6 +25,8 @@ struct Items : Codable {
 struct VolumeInfo : Codable {
     var title : String?
     var authors : [String]?
+//    var authors : String?
+
     var pageCount : Int?
     var ratingCount : Int?
     var averageRating : Int?
