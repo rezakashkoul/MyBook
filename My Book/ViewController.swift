@@ -23,37 +23,35 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
             searchTexField.placeholder = "Search by book title!"
             changeSearchButton.setImage(UIImage(systemName: "book.closed"), for: .normal)
             textUpdaterByFilter = "+intitle"
+            bookListTableView.reloadData()
         } else {
             changeSearchButton.setImage(UIImage(systemName: "person"), for: .normal)
             searchTexField.placeholder = "Search by book Author!"
-            
             textUpdaterByFilter = "+inauthor"
+            bookListTableView.reloadData()
         }
     }
     
     @IBAction func searchByFilterSegment(_ sender: Any) {
-        
+        segmentManagement()
     }
     
     var books = [Items]()
-    
     var searchedItems = String()
     var textUpdaterByFilter = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         searchTexField.delegate = self
         bookListTableView.delegate = self
         bookListTableView.dataSource = self
         bookListTableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "tableViewCell")
         performSearch()
-        
         tabBarController?.selectedIndex = 0
         tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass.circle"), selectedImage: UIImage(systemName: "magnifyingglass.circle.fill"))
         segmentState.selectedSegmentIndex = 1
-       // segmentManagement()
+        segmentManagement()
         overrideUserInterfaceStyle = .light
         bookListTableView.keyboardDismissMode = .onDrag
         textUpdaterByFilter = "+inauthor"
@@ -63,19 +61,23 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         changeSearchButton.layer.borderColor = UIColor.appColor(.borderColor)?.cgColor
     }
     
-//    func segmentManagement() {
-//        if segmentState.selectedSegmentIndex == 0 {
-//            books = books.sorted(by: { firstItem, SecondItem in
-//                firstItem.volumeInfo.pageCount! < SecondItem.volumeInfo.pageCount!
-//            })
-//        } else if segmentState.selectedSegmentIndex == 1 {
-//            books = books.sorted(by: { firstItem, SecondItem in
-//                firstItem.volumeInfo.averageRating! < SecondItem.volumeInfo.ratingCount!
-//            })
-//        }
-//    }
-    
-    
+    func segmentManagement() {
+        if segmentState.selectedSegmentIndex == 0 {
+            books = books.sorted(by: { firstItem, secondItem in
+                
+                //                    guard let flagship0 = $0.flagship, let flagship1 = $1.flagship else { return false }
+                //                    return flagship0 && !flagship1
+                //                }
+                //
+                //
+                firstItem.volumeInfo.pageCount ?? 0 < secondItem.volumeInfo.pageCount ?? 1
+            })
+        } else if segmentState.selectedSegmentIndex == 1 {
+            books = books.sorted(by: { firstItem, SecondItem in
+                firstItem.volumeInfo.averageRating ?? 0 < SecondItem.volumeInfo.ratingCount ?? 1
+            })
+        }
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newPage = storyboard?.instantiateViewController(withIdentifier: "BookDetailController") as? BookDetailController
@@ -89,17 +91,15 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         if let showDownloadLink = books[indexPath.row].accessInfo.epub?.downloadLink {
             newPage?.passedDownloadLink = showDownloadLink
         } else {
-            //newPage?.downloadLinkDataLabel.isHidden = true
-
+            //            newPage?.downloadLinkDataLabel.isHidden = true
         }
-//        if let showAthors = books[indexPath.row].volumeInfo.authors {
-//            newPage?.authorsListDataLabel.text = showAthors[indexPath.row]
-//        } else {
-//            newPage?.authorsListDataLabel.isHidden = true
-//        }
+        //        if let showAthors = books[indexPath.row].volumeInfo.authors {
+        //            newPage?.authorsListDataLabel.text = showAthors[indexPath.row]
+        //        } else {
+        //            newPage?.authorsListDataLabel.isHidden = true
+        //        }
         
         present(newPage!, animated: true, completion: nil)
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,7 +133,7 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         if let smallThumbnail = self.books[indexPath.row].volumeInfo.imageLinks?.smallThumbnail {
             cell.bookImage.isHidden = false
             //            cell.bookImage!.image = image
-            guard let url = URL(string: smallThumbnail) else { return cell}
+            guard let url = URL(string: smallThumbnail) else { return cell }
             let getDataTask = URLSession.shared.dataTask(with: url) { data, _, error in
                 guard let data = data , error == nil else {
                     return
@@ -178,7 +178,6 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     
     //https://www.googleapis.com/books/v1/volumes?q=flower+inauthor
     func getDataFromApi() {
-        //searchedItems
         let urlString =  "https://www.googleapis.com/books/v1/volumes?q=\(searchTexField.text! + textUpdaterByFilter)"
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
@@ -195,4 +194,3 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         }
     }
 }
-
