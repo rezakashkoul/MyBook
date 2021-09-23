@@ -17,7 +17,6 @@ class BookDetailController: UIViewController {
     @IBOutlet weak var FavoriteOutletButton: UIButton!
     @IBAction func addAndRemoveFavoriteButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-
     }
     
     var passedImage = String()
@@ -26,6 +25,9 @@ class BookDetailController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        FavoriteOutletButton.layer.cornerRadius = 5
+        
+        tabBarItem = UITabBarItem(title: "Favorite", image: UIImage(systemName: "star"), selectedImage: UIImage(systemName: "star.fill"))
         
         bigImage.image = UIImage(named: "\(passedImage)")
         downloadLinkDataLabel.text = passedDownloadLink

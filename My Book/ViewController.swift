@@ -39,11 +39,10 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     
     var searchedItems = String()
     var textUpdaterByFilter = String()
-    //  let myindexPath = bookListTableView.indexPathForRowAtPoint(point)
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         searchTexField.delegate = self
         bookListTableView.delegate = self
@@ -51,6 +50,8 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         bookListTableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "tableViewCell")
         performSearch()
         
+        tabBarController?.selectedIndex = 0
+        tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass.circle"), selectedImage: UIImage(systemName: "magnifyingglass.circle.fill"))
         segmentState.selectedSegmentIndex = 1
        // segmentManagement()
         overrideUserInterfaceStyle = .light
@@ -79,7 +80,7 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newPage = storyboard?.instantiateViewController(withIdentifier: "BookDetailController") as? BookDetailController
         
-        if let showImage = books[indexPath.row].volumeInfo.imageLinks?.smallThumbnail
+        if let showImage = books[indexPath.row].volumeInfo.imageLinks?.thumbnail
         {
             newPage?.passedImage = showImage
         } else {

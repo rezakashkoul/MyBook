@@ -158,15 +158,16 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K6w-14-5Dl">
-                                        <rect key="frame" x="145" y="318" width="100" height="20"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K6w-14-5Dl">
+                                        <rect key="frame" x="117" y="295" width="156" height="48"/>
+                                        <color key="backgroundColor" name="tabBarColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="Pyf-4k-mkg"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="Vmd-Uq-ZUv"/>
-                                            <constraint firstAttribute="width" constant="100" id="ah9-6f-gcH"/>
+                                            <constraint firstAttribute="height" constant="48" id="w7D-vC-GWP"/>
+                                            <constraint firstAttribute="width" constant="156" id="zDJ-qE-xaT"/>
                                         </constraints>
+                                        <color key="tintColor" name="segmentColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Add / Remove to Favorite Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Add to Favorite"/>
                                         <connections>
                                             <action selector="addAndRemoveFavoriteButton:" destination="jEh-0G-OvA" eventType="touchUpInside" id="ewW-nK-b2o"/>
                                         </connections>
@@ -178,11 +179,11 @@
                                     <constraint firstAttribute="trailing" secondItem="AGV-j5-gG4" secondAttribute="trailing" constant="8" id="5xr-VR-HCX"/>
                                     <constraint firstAttribute="trailing" secondItem="ATt-Nf-uAU" secondAttribute="trailing" constant="8" id="Ak5-5l-ACn"/>
                                     <constraint firstItem="ATt-Nf-uAU" firstAttribute="top" secondItem="9K2-9z-tFQ" secondAttribute="bottom" constant="20" id="AqG-Ny-tGY"/>
-                                    <constraint firstAttribute="bottom" secondItem="K6w-14-5Dl" secondAttribute="bottom" constant="8" id="Q8s-4W-Qrg"/>
                                     <constraint firstItem="AGV-j5-gG4" firstAttribute="top" secondItem="cZJ-Ml-g7q" secondAttribute="bottom" constant="8" id="ZJN-kH-4m1"/>
                                     <constraint firstItem="ATt-Nf-uAU" firstAttribute="leading" secondItem="sjl-Vf-SLe" secondAttribute="leading" constant="8" id="ZXi-pD-hpS"/>
                                     <constraint firstItem="K6w-14-5Dl" firstAttribute="centerX" secondItem="sjl-Vf-SLe" secondAttribute="centerX" id="Zb5-3A-4PR"/>
                                     <constraint firstItem="AGV-j5-gG4" firstAttribute="leading" secondItem="sjl-Vf-SLe" secondAttribute="leading" constant="8" id="ZlZ-0o-hUl"/>
+                                    <constraint firstAttribute="bottom" secondItem="K6w-14-5Dl" secondAttribute="bottom" constant="33" id="cZz-Nj-gJ9"/>
                                     <constraint firstItem="cZJ-Ml-g7q" firstAttribute="top" secondItem="ATt-Nf-uAU" secondAttribute="bottom" constant="8" id="hwe-Lk-BHJ"/>
                                     <constraint firstItem="9K2-9z-tFQ" firstAttribute="leading" secondItem="sjl-Vf-SLe" secondAttribute="leading" constant="8" id="is0-LC-Ssi"/>
                                     <constraint firstItem="cZJ-Ml-g7q" firstAttribute="leading" secondItem="sjl-Vf-SLe" secondAttribute="leading" constant="8" id="mVZ-9X-fLA"/>
@@ -220,7 +221,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nPU-OM-t2M">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="segmentColor"/>
                         <color key="selectedImageTintColor" name="tabBarColor"/>
                     </tabBar>
                     <connections>
