@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSource , UITextFieldDelegate {
     
+    @IBOutlet weak var nothngLabel: UILabel!
     @IBOutlet weak var bookListTableView: UITableView!
     @IBOutlet weak var searchTexField: UITextField!
     @IBOutlet weak var segmentState: UISegmentedControl!
@@ -20,20 +21,24 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     
     @IBAction func changeSearchButtonTapped(_ sender: Any) {
         if changeSearchButton.currentImage == UIImage(systemName: "person") {
+            changeSearchButton.layer.backgroundColor = UIColor.appColor(.bookColor)?.cgColor
             searchTexField.placeholder = "Search by book title!"
             changeSearchButton.setImage(UIImage(systemName: "book.closed"), for: .normal)
             textUpdaterByFilter = "+intitle"
-            bookListTableView.reloadData()
+            performSearch()
         } else {
             changeSearchButton.setImage(UIImage(systemName: "person"), for: .normal)
+            changeSearchButton.layer.backgroundColor = UIColor.appColor(.borderColor)?.cgColor
+            
             searchTexField.placeholder = "Search by book Author!"
             textUpdaterByFilter = "+inauthor"
-            bookListTableView.reloadData()
+            performSearch()
         }
     }
     
     @IBAction func searchByFilterSegment(_ sender: Any) {
         segmentManagement()
+        bookListTableView.reloadData()
     }
     
     var books = [Items]()
@@ -42,7 +47,16 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if searchTexField.text == "" {
+            nothngLabel.isHidden = false
+            bookListTableView.isHidden = true
+            bookListTableView.reloadData()
+        } else {
+            nothngLabel.isHidden = false
+            bookListTableView.isHidden = true
+            bookListTableView.isHidden = false
+            bookListTableView.reloadData()
+        }
         searchTexField.delegate = self
         bookListTableView.delegate = self
         bookListTableView.dataSource = self
@@ -52,6 +66,7 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass.circle"), selectedImage: UIImage(systemName: "magnifyingglass.circle.fill"))
         segmentState.selectedSegmentIndex = 1
         segmentManagement()
+        bookListTableView.reloadData()
         overrideUserInterfaceStyle = .light
         bookListTableView.keyboardDismissMode = .onDrag
         textUpdaterByFilter = "+inauthor"
@@ -59,22 +74,20 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         changeSearchButton.layer.cornerRadius = 5
         changeSearchButton.layer.borderWidth = 2
         changeSearchButton.layer.borderColor = UIColor.appColor(.borderColor)?.cgColor
+        changeSearchButton.layer.backgroundColor = UIColor.appColor(.bookColor)?.cgColor
     }
     
     func segmentManagement() {
         if segmentState.selectedSegmentIndex == 0 {
             books = books.sorted(by: { firstItem, secondItem in
-                
-                //                    guard let flagship0 = $0.flagship, let flagship1 = $1.flagship else { return false }
-                //                    return flagship0 && !flagship1
-                //                }
-                //
-                //
-                firstItem.volumeInfo.pageCount ?? 0 < secondItem.volumeInfo.pageCount ?? 1
+                guard let first = firstItem.volumeInfo.pageCount, let second = secondItem.volumeInfo.pageCount else { return  true }
+                return first > second
             })
-        } else if segmentState.selectedSegmentIndex == 1 {
-            books = books.sorted(by: { firstItem, SecondItem in
-                firstItem.volumeInfo.averageRating ?? 0 < SecondItem.volumeInfo.ratingCount ?? 1
+        }
+        if segmentState.selectedSegmentIndex == 1 {
+            books = books.sorted(by: { firstItem, secondItem in
+                guard let first = firstItem.volumeInfo.averageRating, let second = secondItem.volumeInfo.averageRating else { return  true }
+                return first > second
             })
         }
     }
@@ -132,7 +145,6 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         
         if let smallThumbnail = self.books[indexPath.row].volumeInfo.imageLinks?.smallThumbnail {
             cell.bookImage.isHidden = false
-            //            cell.bookImage!.image = image
             guard let url = URL(string: smallThumbnail) else { return cell }
             let getDataTask = URLSession.shared.dataTask(with: url) { data, _, error in
                 guard let data = data , error == nil else {
@@ -159,6 +171,17 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     
     func doSearch() {
         if self.searchTexField.text != nil {
+            
+            if searchTexField.text == "" {
+                nothngLabel.isHidden = false
+                bookListTableView.isHidden = true
+                bookListTableView.reloadData()
+            } else {
+                nothngLabel.isHidden = false
+                bookListTableView.isHidden = true
+                bookListTableView.isHidden = false
+                bookListTableView.reloadData()
+            }
             if searchTexField.text!.count >= 3 {
                 getDataFromApi()
             }

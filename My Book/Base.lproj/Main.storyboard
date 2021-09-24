@@ -47,12 +47,16 @@
                                             <constraint firstAttribute="width" secondItem="IyP-Zc-fqr" secondAttribute="height" id="3Bh-d6-7I4"/>
                                             <constraint firstAttribute="width" constant="50" id="PTY-yV-z03"/>
                                         </constraints>
+                                        <color key="tintColor" name="tabBarColor"/>
+                                        <state key="normal">
+                                            <color key="titleColor" systemColor="labelColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="changeSearchButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GEL-ie-fJb"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.80948489899999998" green="0.89985781909999996" blue="0.81304615739999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="segmentColor"/>
                                 <constraints>
                                     <constraint firstItem="R8X-E7-eDz" firstAttribute="height" secondItem="9F6-jh-u4W" secondAttribute="height" multiplier="0.911765" id="0pG-cX-Ibx"/>
                                     <constraint firstItem="9F6-jh-u4W" firstAttribute="top" secondItem="2r3-8z-VUc" secondAttribute="top" constant="50" id="Ds1-bg-A2c"/>
@@ -66,6 +70,15 @@
                                     <constraint firstItem="IyP-Zc-fqr" firstAttribute="leading" secondItem="9F6-jh-u4W" secondAttribute="trailing" constant="15" id="wMr-Ds-vIg"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There's nothing to Show 😩" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98B-0M-tUl">
+                                <rect key="frame" x="75.666666666666686" y="442.66666666666669" width="239" height="45.666666666666686"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="239" id="Urg-jc-gnr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="41i-yl-oN7">
                                 <rect key="frame" x="0.0" y="170" width="390" height="591"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -77,6 +90,8 @@
                             <constraint firstItem="41i-yl-oN7" firstAttribute="top" secondItem="2r3-8z-VUc" secondAttribute="bottom" id="4Jg-Kc-egl"/>
                             <constraint firstItem="41i-yl-oN7" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="BD9-Ud-jgC"/>
                             <constraint firstItem="2r3-8z-VUc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FmL-SZ-vAw"/>
+                            <constraint firstItem="98B-0M-tUl" firstAttribute="centerY" secondItem="41i-yl-oN7" secondAttribute="centerY" id="Jcq-kU-2yR"/>
+                            <constraint firstItem="98B-0M-tUl" firstAttribute="centerX" secondItem="41i-yl-oN7" secondAttribute="centerX" id="Rge-hl-IUU"/>
                             <constraint firstItem="2r3-8z-VUc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cWM-xq-WfR"/>
                             <constraint firstItem="2r3-8z-VUc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ipN-AU-kHi"/>
                             <constraint firstItem="41i-yl-oN7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="sN8-4i-Xvo"/>
@@ -89,6 +104,7 @@
                     <connections>
                         <outlet property="bookListTableView" destination="41i-yl-oN7" id="uEW-Pk-Tt3"/>
                         <outlet property="changeSearchButton" destination="IyP-Zc-fqr" id="uzi-H9-PFW"/>
+                        <outlet property="nothngLabel" destination="98B-0M-tUl" id="mAE-UU-fGY"/>
                         <outlet property="searchTexField" destination="9F6-jh-u4W" id="Oyx-xo-WSi"/>
                         <outlet property="segmentState" destination="R8X-E7-eDz" id="GZj-uz-Vgx"/>
                     </connections>
@@ -244,6 +260,9 @@
         <namedColor name="tabBarColor">
             <color red="0.99699997901916504" green="0.47099998593330383" blue="0.46799999475479126" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
