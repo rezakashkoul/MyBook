@@ -298,7 +298,7 @@
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4Cv-ch-48W"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="segmentColor"/>
                         <constraints>
                             <constraint firstItem="Jp1-aA-kzF" firstAttribute="top" secondItem="4Cv-ch-48W" secondAttribute="top" id="9nn-QL-63c"/>
                             <constraint firstItem="Jp1-aA-kzF" firstAttribute="width" secondItem="Xrs-S0-IMN" secondAttribute="width" id="CVj-30-lDL"/>

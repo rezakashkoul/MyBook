@@ -8,7 +8,7 @@
 import UIKit
 
 
-class BookDetailController: UIViewController {
+class BookDetailController: UIViewController , UIGestureRecognizerDelegate {
     
     @IBOutlet weak var bigImage: UIImageView!
     @IBOutlet weak var downloadLinkDataLabel: UILabel!
@@ -41,8 +41,22 @@ class BookDetailController: UIViewController {
     var passedToDetailRatingCountDataLabel = Int()
     var passedToDetailAvarageRatingDataLabel = Int()
     
+    @objc func didTapLabelDemo(sender: UITapGestureRecognizer)
+    {
+        print("****** Open the link! \(sender) ******")
+        guard let url = URL(string: passedToDetailDownloadLink) else { return }
+        UIApplication.shared.open(url)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        downloadLinkDataLabel.isUserInteractionEnabled = true // Remember to do this
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(didTapLabelDemo))
+        downloadLinkDataLabel.addGestureRecognizer(tap)
+        tap.delegate = self // Remember to extend your class with UIGestureRecognizerDelegate
         
         guard let url = URL(string: passedToDetailBigImage) else { return  }
         let getDataTask = URLSession.shared.dataTask(with: url) { data, _, error in
