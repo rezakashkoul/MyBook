@@ -24,12 +24,15 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
             changeSearchButton.layer.backgroundColor = UIColor.appColor(.bookColor)?.cgColor
             searchTexField.placeholder = "Search by book title!"
             changeSearchButton.setImage(UIImage(systemName: "book.closed"), for: .normal)
+            changeSearchButton.layer.borderWidth = 2
+            changeSearchButton.layer.borderColor = UIColor.appColor(.borderColor)?.cgColor
             textUpdaterByFilter = "+intitle"
             performSearch()
         } else {
             changeSearchButton.setImage(UIImage(systemName: "person"), for: .normal)
             changeSearchButton.layer.backgroundColor = UIColor.appColor(.borderColor)?.cgColor
-            
+            changeSearchButton.layer.borderWidth = 2
+            changeSearchButton.layer.borderColor = UIColor.appColor(.bookColor)?.cgColor
             searchTexField.placeholder = "Search by book Author!"
             textUpdaterByFilter = "+inauthor"
             performSearch()
@@ -94,24 +97,50 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newPage = storyboard?.instantiateViewController(withIdentifier: "BookDetailController") as? BookDetailController
-        
-        if let showImage = books[indexPath.row].volumeInfo.imageLinks?.thumbnail
+        tableView.deselectRow(at: indexPath, animated: false)
+        if let showBigImage = books[indexPath.row].volumeInfo.imageLinks?.thumbnail
         {
-            newPage?.passedImage = showImage
+            newPage?.passedToDetailBigImage = showBigImage
         } else {
             newPage?.bigImage.isHidden = true
         }
         if let showDownloadLink = books[indexPath.row].accessInfo.epub?.downloadLink {
-            newPage?.passedDownloadLink = showDownloadLink
+            newPage?.passedToDetailDownloadLink = showDownloadLink
         } else {
             //            newPage?.downloadLinkDataLabel.isHidden = true
         }
+        
+        
+        
+        
         //        if let showAthors = books[indexPath.row].volumeInfo.authors {
         //            newPage?.authorsListDataLabel.text = showAthors[indexPath.row]
         //        } else {
         //            newPage?.authorsListDataLabel.isHidden = true
         //        }
         
+        
+        
+        
+        if let specificBookID = books[indexPath.row].id {
+            newPage?.passedToDetailBookID = specificBookID
+        }
+        
+        if let showSmallImage = books[indexPath.row].volumeInfo.imageLinks?.smallThumbnail {
+            newPage?.passedToDetailSmallBookImage = showSmallImage
+        }
+        if let showTitle = books[indexPath.row].volumeInfo.title {
+            newPage?.passedToDetailTitleDataLabel = showTitle
+        }
+        if let showPageCount = books[indexPath.row].volumeInfo.pageCount {
+            newPage?.passedToDetailPageCountDataLabel = showPageCount
+        }
+        if let showRatingCount = books[indexPath.row].volumeInfo.ratingCount {
+            newPage?.passedToDetailRatingCountDataLabel = showRatingCount
+        }
+        if let showAverageRating = books[indexPath.row].volumeInfo.averageRating {
+            newPage?.passedToDetailAvarageRatingDataLabel = showAverageRating
+        } 
         present(newPage!, animated: true, completion: nil)
     }
     
@@ -121,7 +150,7 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCell", for: indexPath) as! TableViewCell
-        
+        cell.selectionStyle = .none
         cell.titleDataLabel.text = books[indexPath.row].volumeInfo.title
         
         if (books[indexPath.row].volumeInfo.pageCount?.description) != nil {

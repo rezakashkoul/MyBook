@@ -18,6 +18,7 @@
 		F756565C26F9E6F2005DED1C /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756565A26F9E6F2005DED1C /* TableViewCell.swift */; };
 		F756565D26F9E6F2005DED1C /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F756565B26F9E6F2005DED1C /* TableViewCell.xib */; };
 		F756565F26F9F5D5005DED1C /* BookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756565E26F9F5D5005DED1C /* BookModel.swift */; };
+		F762D91E26FDE6220022D1EC /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F762D91D26FDE6220022D1EC /* FavoriteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		F756565A26F9E6F2005DED1C /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		F756565B26F9E6F2005DED1C /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		F756565E26F9F5D5005DED1C /* BookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookModel.swift; sourceTree = "<group>"; };
+		F762D91D26FDE6220022D1EC /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				F756564626F9C6AC005DED1C /* SceneDelegate.swift */,
 				F756564826F9C6AC005DED1C /* ViewController.swift */,
 				F707BA9D26FB67960023ED93 /* BookDetailController.swift */,
+				F762D91D26FDE6220022D1EC /* FavoriteViewController.swift */,
 				F756565A26F9E6F2005DED1C /* TableViewCell.swift */,
 				F756565B26F9E6F2005DED1C /* TableViewCell.xib */,
 				F756564A26F9C6AC005DED1C /* Main.storyboard */,
@@ -159,6 +162,7 @@
 				F756565C26F9E6F2005DED1C /* TableViewCell.swift in Sources */,
 				F756564526F9C6AC005DED1C /* AppDelegate.swift in Sources */,
 				F756564726F9C6AC005DED1C /* SceneDelegate.swift in Sources */,
+				F762D91E26FDE6220022D1EC /* FavoriteViewController.swift in Sources */,
 				F707BAA026FB7A260023ED93 /* ColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

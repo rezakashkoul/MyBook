@@ -14,17 +14,37 @@ class BookDetailController: UIViewController {
     @IBOutlet weak var downloadLinkDataLabel: UILabel!
     @IBOutlet weak var authorsListDataLabel: UILabel!
     @IBOutlet weak var FavoriteOutletButton: UIButton!
+    
     @IBAction func addAndRemoveFavoriteButton(_ sender: Any) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
+        vc.passedToFavoriteBookID = passedToDetailBookID
+        vc.passedToFavoriteSmallBookImage = passedToDetailSmallBookImage
+        vc.passedToFavoriteTitleDataLabel = passedToDetailTitleDataLabel
+        vc.passedToFavoritePageCountDataLabel = passedToDetailPageCountDataLabel
+        vc.passedToFavoriteRatingCountDataLabel = passedToDetailRatingCountDataLabel
+        vc.passedToFavoriteAvarageRatingDataLabel = passedToDetailAvarageRatingDataLabel
+        //present(vc, animated: false, completion: nil)
         self.dismiss(animated: true, completion: nil)
+        
     }
-    var passedImage = String()
-    var passedDownloadLink = String()
-    var passedAthors = String()
+    //for present in this page and also favoritePage
+    var passedToDetailBigImage = String()
+    var passedToDetailDownloadLink = String()
+    var passedToDetailAthors = String()
+    var passedToDetailBookID = String()
+    
+    //just to pass in favoritePage
+    
+    var passedToDetailSmallBookImage = String()
+    var passedToDetailTitleDataLabel = String()
+    var passedToDetailPageCountDataLabel = Int()
+    var passedToDetailRatingCountDataLabel = Int()
+    var passedToDetailAvarageRatingDataLabel = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let url = URL(string: passedImage) else { return  }
+        guard let url = URL(string: passedToDetailBigImage) else { return  }
         let getDataTask = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data , error == nil else {
                 return
@@ -36,10 +56,14 @@ class BookDetailController: UIViewController {
         }
         getDataTask.resume()
         
-        bigImage.image = UIImage(named: "\(passedImage)")
-        downloadLinkDataLabel.text = passedDownloadLink
-        authorsListDataLabel.text = passedAthors
-        tabBarItem = UITabBarItem(title: "Favorite", image: UIImage(systemName: "star"), selectedImage: UIImage(systemName: "star.fill"))
+        bigImage.image = UIImage(named: "\(passedToDetailBigImage)")
+        if downloadLinkDataLabel.text == "" {
+            downloadLinkDataLabel.text = "Unfortunatly there's no download link for this Book"
+        } else {
+            downloadLinkDataLabel.text = passedToDetailDownloadLink
+        }
+        bigImage.layer.cornerRadius = 30
+        authorsListDataLabel.text = passedToDetailAthors
         FavoriteOutletButton.layer.cornerRadius = FavoriteOutletButton.bounds.height / 2
     }
 }
