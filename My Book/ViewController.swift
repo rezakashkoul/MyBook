@@ -98,6 +98,14 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newPage = storyboard?.instantiateViewController(withIdentifier: "BookDetailController") as? BookDetailController
         tableView.deselectRow(at: indexPath, animated: false)
+        
+        let specificBookDetail = books[indexPath.row]
+        newPage?.chosenBookCellArray = specificBookDetail
+        
+         
+        
+        
+        
         if let showBigImage = books[indexPath.row].volumeInfo.imageLinks?.thumbnail
         {
             newPage?.passedToDetailBigImage = showBigImage
@@ -109,19 +117,11 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         } else {
             //            newPage?.downloadLinkDataLabel.isHidden = true
         }
-        
-        
-        
-        
         //        if let showAthors = books[indexPath.row].volumeInfo.authors {
         //            newPage?.authorsListDataLabel.text = showAthors[indexPath.row]
         //        } else {
         //            newPage?.authorsListDataLabel.isHidden = true
         //        }
-        
-        
-        
-        
         if let specificBookID = books[indexPath.row].id {
             newPage?.passedToDetailBookID = specificBookID
         }
@@ -140,7 +140,7 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         }
         if let showAverageRating = books[indexPath.row].volumeInfo.averageRating {
             newPage?.passedToDetailAvarageRatingDataLabel = showAverageRating
-        } 
+        }
         present(newPage!, animated: true, completion: nil)
     }
     

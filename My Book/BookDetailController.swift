@@ -10,6 +10,10 @@ import UIKit
 
 class BookDetailController: UIViewController , UIGestureRecognizerDelegate {
     
+    var chosenBookCellArray : Items?
+    
+    
+    
     @IBOutlet weak var bigImage: UIImageView!
     @IBOutlet weak var downloadLinkDataLabel: UILabel!
     @IBOutlet weak var authorsListDataLabel: UILabel!
@@ -17,13 +21,14 @@ class BookDetailController: UIViewController , UIGestureRecognizerDelegate {
     
     @IBAction func addAndRemoveFavoriteButton(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
+        
         vc.passedToFavoriteBookID = passedToDetailBookID
         vc.passedToFavoriteSmallBookImage = passedToDetailSmallBookImage
         vc.passedToFavoriteTitleDataLabel = passedToDetailTitleDataLabel
         vc.passedToFavoritePageCountDataLabel = passedToDetailPageCountDataLabel
         vc.passedToFavoriteRatingCountDataLabel = passedToDetailRatingCountDataLabel
         vc.passedToFavoriteAvarageRatingDataLabel = passedToDetailAvarageRatingDataLabel
-        //present(vc, animated: false, completion: nil)
+
         self.dismiss(animated: true, completion: nil)
         
     }
@@ -52,11 +57,11 @@ class BookDetailController: UIViewController , UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        downloadLinkDataLabel.isUserInteractionEnabled = true // Remember to do this
+        downloadLinkDataLabel.isUserInteractionEnabled = true
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self, action: #selector(didTapLabelDemo))
         downloadLinkDataLabel.addGestureRecognizer(tap)
-        tap.delegate = self // Remember to extend your class with UIGestureRecognizerDelegate
+        tap.delegate = self
         
         guard let url = URL(string: passedToDetailBigImage) else { return  }
         let getDataTask = URLSession.shared.dataTask(with: url) { data, _, error in

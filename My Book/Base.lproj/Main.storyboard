@@ -122,10 +122,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5k-f6-PuN" userLabel="searchHeadView">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="170"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="110"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite Books" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWT-DQ-0ub">
-                                        <rect key="frame" x="8" y="85" width="220" height="39"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite Book List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWT-DQ-0ub">
+                                        <rect key="frame" x="8" y="60" width="264.66666666666669" height="39"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -134,12 +134,12 @@
                                 <color key="backgroundColor" name="segmentColor"/>
                                 <constraints>
                                     <constraint firstItem="fWT-DQ-0ub" firstAttribute="leading" secondItem="w5k-f6-PuN" secondAttribute="leading" constant="8" id="HRe-dw-82B"/>
-                                    <constraint firstAttribute="height" constant="170" id="ICo-Dd-ztm"/>
-                                    <constraint firstItem="fWT-DQ-0ub" firstAttribute="top" secondItem="w5k-f6-PuN" secondAttribute="top" constant="85" id="ryK-gu-meY"/>
+                                    <constraint firstAttribute="height" constant="110" id="ICo-Dd-ztm"/>
+                                    <constraint firstItem="fWT-DQ-0ub" firstAttribute="top" secondItem="w5k-f6-PuN" secondAttribute="top" constant="60" id="ryK-gu-meY"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There's no item marked as favorite 🤩" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t9H-ni-ZV0">
-                                <rect key="frame" x="75.666666666666686" y="442.66666666666669" width="239" height="45.666666666666686"/>
+                                <rect key="frame" x="75.666666666666686" y="412.66666666666669" width="239" height="45.666666666666686"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="239" id="PW4-1H-Pcd"/>
                                 </constraints>
@@ -148,7 +148,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="x6q-0c-0D4">
-                                <rect key="frame" x="0.0" y="170" width="390" height="591"/>
+                                <rect key="frame" x="0.0" y="110" width="390" height="651"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="390" id="kTk-vu-pmi"/>
