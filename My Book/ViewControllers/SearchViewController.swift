@@ -7,14 +7,16 @@
 
 import UIKit
 
-
-class ViewController: UIViewController {
+//MARK: This ViewController is the controller of the "Search" tab
+class SearchViewController: UIViewController {
     
+    //MARK:  Page Outlets:
     @IBOutlet weak var nothngLabel: UILabel!
     @IBOutlet weak var bookListTableView: UITableView!
     @IBOutlet weak var searchTexField: UITextField!
     @IBOutlet weak var segmentState: UISegmentedControl!
     @IBOutlet weak var changeSearchButton: UIButton!
+    //MARK:  Page Actions:
     @IBAction func textFieldValueChanged(_ sender: UITextField) {
         doSearchActionWhileTyping()
     }
@@ -27,24 +29,21 @@ class ViewController: UIViewController {
             performSearch()
         }
     }
-    
     @IBAction func searchByFilterSegment(_ sender: Any) {
         sortingResultsOrder()
         reloadTableView()
     }
     
+    //MARK:  Variables
     var books = [Items]()
     var searchedItems = String()
     var textUpdaterByFilter = String()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         overrideUserInterfaceStyle = .light
         bookListTableView.keyboardDismissMode = .onDrag
-        
         searchTexField.delegate = self
         bookListTableView.delegate = self
         bookListTableView.dataSource = self
@@ -60,23 +59,32 @@ class ViewController: UIViewController {
             bookListTableView.isHidden = false
             reloadTableView()
         }
-        
         performSearch()
-        
         tabBarController?.selectedIndex = 0
-        tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass.circle"), selectedImage: UIImage(systemName: "magnifyingglass.circle.fill"))
+        setTheTabBarStyle()
         segmentState.selectedSegmentIndex = 1
         sortingResultsOrder()
         reloadTableView()
-        
         textUpdaterByFilter = "+inauthor"
         changeSearchButton.setImage(UIImage(systemName: "book.closed"), for: .normal)
-        
         changeSearchButton.layer.cornerRadius = 5
         changeSearchButton.layer.borderWidth = 2
         changeSearchButton.layer.borderColor = UIColor.appColor(.borderColor)?.cgColor
         changeSearchButton.layer.backgroundColor = UIColor.appColor(.bookColor)?.cgColor
     }
+    //MARK:  Functions
+    
+    /**
+     This fuction makes a title and image for both selected and deselected tabBarState in this tab
+     
+     */
+    func setTheTabBarStyle() {
+        tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass.circle"), selectedImage: UIImage(systemName: "magnifyingglass.circle.fill"))
+    }
+    /**
+     This fuction makes sorts the results from API in two ways, page count and average rating
+     
+     */
     
     func sortingResultsOrder() {
         if segmentState.selectedSegmentIndex == 0 {
@@ -93,6 +101,9 @@ class ViewController: UIViewController {
         }
     }
     
+    /**
+     This fuction changes the search style to "Title" and does some UI changes; the textField placeholder, button image, color and button border layer.
+     */
     func searchByTitleRequirements() {
         changeSearchButton.layer.backgroundColor = UIColor.appColor(.bookColor)?.cgColor
         searchTexField.placeholder = "Search by book title!"
@@ -101,7 +112,9 @@ class ViewController: UIViewController {
         changeSearchButton.layer.borderColor = UIColor.appColor(.borderColor)?.cgColor
         textUpdaterByFilter = "+intitle"
     }
-    
+    /**
+     This fuction changes the search style to "Author" and does some UI changes; the textField placeholder, button image, color and button border layer.
+     */
     func searchByAuthorRequirements() {
         changeSearchButton.setImage(UIImage(systemName: "person"), for: .normal)
         changeSearchButton.layer.backgroundColor = UIColor.appColor(.borderColor)?.cgColor
@@ -111,11 +124,16 @@ class ViewController: UIViewController {
         textUpdaterByFilter = "+inauthor"
     }
     
+    /**
+     This fuction reloads the tableView to see what changes made.
+     */
     func reloadTableView() {
         bookListTableView.reloadData()
     }
     
-    
+    /**
+     This fuction makes the textField to perform the search when the text string characters are three or more than three. It also does some UI show/hide changes due to some conditions.
+     */
     func doSearchActionWhileTyping() {
         if self.searchTexField.text != nil {
             
@@ -134,12 +152,16 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+    /**
+     This fuction makes a data request to the API and reload the tableView
+     */
     func performSearch() {
         getDataFromApi()
         reloadTableView()
     }
-    
+    /**
+     This fuction makes a data request to the API based what user has typed (or typing after 3 character) and calls the parse method.
+     */
     func getDataFromApi() {
         let urlString =  "https://www.googleapis.com/books/v1/volumes?q=\(searchTexField.text! + textUpdaterByFilter)"
         if let url = URL(string: urlString) {
@@ -148,7 +170,9 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+    /**
+     This fuction parses the data (JSON) from the API and saves it to the books array. It also reloads the tableView.
+     */
     func parse(json: Data) {
         let decoder = JSONDecoder()
         if let googleBooks = try? decoder.decode(BookModel.self, from: json) {
@@ -158,11 +182,8 @@ class ViewController: UIViewController {
     }
 }
 
-
-
-
-
-extension ViewController : UITextFieldDelegate {
+//MARK: UITextField Extension to SearchViewController
+extension SearchViewController : UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //textField code
@@ -172,9 +193,9 @@ extension ViewController : UITextFieldDelegate {
     }
 }
 
+//MARK: UITableView Extension to SearchViewController
 
-
-extension ViewController :  UITableViewDelegate , UITableViewDataSource {
+extension SearchViewController :  UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return books.count
@@ -204,6 +225,7 @@ extension ViewController :  UITableViewDelegate , UITableViewDataSource {
             cell.avarageRatingStackView.isHidden = true
         }
         
+        //MARK: The needed reqirements for showing image from URL through the tableViewCells
         if let smallThumbnail = self.books[indexPath.row].volumeInfo.imageLinks?.smallThumbnail {
             cell.bookImage.isHidden = false
             guard let url = URL(string: smallThumbnail) else { return cell }
@@ -232,5 +254,4 @@ extension ViewController :  UITableViewDelegate , UITableViewDataSource {
         newPage?.chosenBookCellArray = specificBookDetail
         present(newPage!, animated: true, completion: nil)
     }
-    
 }
