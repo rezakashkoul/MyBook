@@ -15,8 +15,8 @@
 		F756564C26F9C6AC005DED1C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F756564A26F9C6AC005DED1C /* Main.storyboard */; };
 		F756564E26F9C6AD005DED1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F756564D26F9C6AD005DED1C /* Assets.xcassets */; };
 		F756565126F9C6AD005DED1C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F756564F26F9C6AD005DED1C /* LaunchScreen.storyboard */; };
-		F756565C26F9E6F2005DED1C /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756565A26F9E6F2005DED1C /* TableViewCell.swift */; };
-		F756565D26F9E6F2005DED1C /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F756565B26F9E6F2005DED1C /* TableViewCell.xib */; };
+		F756565C26F9E6F2005DED1C /* TabsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756565A26F9E6F2005DED1C /* TabsTableViewCell.swift */; };
+		F756565D26F9E6F2005DED1C /* TabsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F756565B26F9E6F2005DED1C /* TabsTableViewCell.xib */; };
 		F756565F26F9F5D5005DED1C /* BookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756565E26F9F5D5005DED1C /* BookModel.swift */; };
 		F762D91E26FDE6220022D1EC /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F762D91D26FDE6220022D1EC /* FavoriteViewController.swift */; };
 /* End PBXBuildFile section */
@@ -32,8 +32,8 @@
 		F756564D26F9C6AD005DED1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F756565026F9C6AD005DED1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F756565226F9C6AD005DED1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F756565A26F9E6F2005DED1C /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		F756565B26F9E6F2005DED1C /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		F756565A26F9E6F2005DED1C /* TabsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsTableViewCell.swift; sourceTree = "<group>"; };
+		F756565B26F9E6F2005DED1C /* TabsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabsTableViewCell.xib; sourceTree = "<group>"; };
 		F756565E26F9F5D5005DED1C /* BookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookModel.swift; sourceTree = "<group>"; };
 		F762D91D26FDE6220022D1EC /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,19 +70,59 @@
 			children = (
 				F756564426F9C6AC005DED1C /* AppDelegate.swift */,
 				F756564626F9C6AC005DED1C /* SceneDelegate.swift */,
-				F756564826F9C6AC005DED1C /* ViewController.swift */,
-				F707BA9D26FB67960023ED93 /* BookDetailController.swift */,
-				F762D91D26FDE6220022D1EC /* FavoriteViewController.swift */,
-				F756565A26F9E6F2005DED1C /* TableViewCell.swift */,
-				F756565B26F9E6F2005DED1C /* TableViewCell.xib */,
-				F756564A26F9C6AC005DED1C /* Main.storyboard */,
-				F707BA9F26FB7A260023ED93 /* ColorExtension.swift */,
-				F756565E26F9F5D5005DED1C /* BookModel.swift */,
+				F7F5955E27007406009A08F4 /* ViewControllers */,
+				F7F5955D270073CB009A08F4 /* Main TableViewCustomCell */,
+				F7F5955C270073A4009A08F4 /* Extensions */,
+				F7F5955A2700734C009A08F4 /* Model */,
+				F7F5955F2700742A009A08F4 /* Storyboard */,
 				F756564D26F9C6AD005DED1C /* Assets.xcassets */,
 				F756564F26F9C6AD005DED1C /* LaunchScreen.storyboard */,
 				F756565226F9C6AD005DED1C /* Info.plist */,
 			);
 			path = "My Book";
+			sourceTree = "<group>";
+		};
+		F7F5955A2700734C009A08F4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F756565E26F9F5D5005DED1C /* BookModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F7F5955C270073A4009A08F4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F707BA9F26FB7A260023ED93 /* ColorExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F7F5955D270073CB009A08F4 /* Main TableViewCustomCell */ = {
+			isa = PBXGroup;
+			children = (
+				F756565A26F9E6F2005DED1C /* TabsTableViewCell.swift */,
+				F756565B26F9E6F2005DED1C /* TabsTableViewCell.xib */,
+			);
+			path = "Main TableViewCustomCell";
+			sourceTree = "<group>";
+		};
+		F7F5955E27007406009A08F4 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F756564826F9C6AC005DED1C /* ViewController.swift */,
+				F707BA9D26FB67960023ED93 /* BookDetailController.swift */,
+				F762D91D26FDE6220022D1EC /* FavoriteViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F7F5955F2700742A009A08F4 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				F756564A26F9C6AC005DED1C /* Main.storyboard */,
+			);
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,7 +183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F756565126F9C6AD005DED1C /* LaunchScreen.storyboard in Resources */,
-				F756565D26F9E6F2005DED1C /* TableViewCell.xib in Resources */,
+				F756565D26F9E6F2005DED1C /* TabsTableViewCell.xib in Resources */,
 				F756564E26F9C6AD005DED1C /* Assets.xcassets in Resources */,
 				F756564C26F9C6AC005DED1C /* Main.storyboard in Resources */,
 			);
@@ -159,7 +199,7 @@
 				F756565F26F9F5D5005DED1C /* BookModel.swift in Sources */,
 				F707BA9E26FB67960023ED93 /* BookDetailController.swift in Sources */,
 				F756564926F9C6AC005DED1C /* ViewController.swift in Sources */,
-				F756565C26F9E6F2005DED1C /* TableViewCell.swift in Sources */,
+				F756565C26F9E6F2005DED1C /* TabsTableViewCell.swift in Sources */,
 				F756564526F9C6AC005DED1C /* AppDelegate.swift in Sources */,
 				F756564726F9C6AC005DED1C /* SceneDelegate.swift in Sources */,
 				F762D91E26FDE6220022D1EC /* FavoriteViewController.swift in Sources */,

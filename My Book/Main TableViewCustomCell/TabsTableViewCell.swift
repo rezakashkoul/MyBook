@@ -1,5 +1,5 @@
 //
-//  TableViewCell.swift
+//  TabsTableViewCell.swift
 //  My Book
 //
 //  Created by Reza Kashkoul on 6/30/1400 AP.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TableViewCell: UITableViewCell {
+class TabsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var bookImage: UIImageView!
     @IBOutlet weak var titleDataLabel: UILabel!
