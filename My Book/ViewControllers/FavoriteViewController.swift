@@ -21,12 +21,19 @@ class FavoriteViewController: UIViewController {
     
     //MARK:  Variables
     // FIXME: Needs to be implemented and also show the output in the tableView
-    var favoriteItem : Items?
-    // var favoriteList : [favoriteItem]?
+   // var favoriteItem : Items!
+     var favoriteList : [Items]?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        favoriteListTableView.reloadData()
+    }
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
+        tabBarController?.selectedIndex = 1
         setTheTabBarStyle()
         favoriteListTableView.delegate = self
         favoriteListTableView.dataSource = self
@@ -60,20 +67,20 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //  return [favoriteItem]?.count
-        return 4 // MARK: a temperary value to insure if the tableView setup is Okay
+        return 1 // MARK: a temperary value to insure if the tableView setup is Okay
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TabsTableViewCell", for: indexPath) as! TabsTableViewCell
         cell.selectionStyle = .none
-        cell.bookImage.image = UIImage(named: favoriteItem?.volumeInfo.imageLinks?.smallThumbnail?.description ?? "")
-        cell.titleDataLabel.text = favoriteItem?.volumeInfo.title
-        cell.PageCountDataLabel.text = favoriteItem?.volumeInfo.pageCount?.description
-        cell.ratingCountDataLabel.text = favoriteItem?.volumeInfo.ratingCount?.description
-        cell.avarageRatingDataLabel.text = favoriteItem?.volumeInfo.averageRating?.description
+        cell.bookImage.image = UIImage(named: modalDataPasser?.volumeInfo.imageLinks?.smallThumbnail?.description ?? "")
+        cell.titleDataLabel.text = modalDataPasser?.volumeInfo.title
+        cell.PageCountDataLabel.text = modalDataPasser?.volumeInfo.pageCount?.description
+        cell.ratingCountDataLabel.text = modalDataPasser?.volumeInfo.ratingCount?.description
+        cell.avarageRatingDataLabel.text = modalDataPasser?.volumeInfo.averageRating?.description
         
         //MARK: The needed reqirements for showing image from URL through the tableViewCells
-        guard let url = URL(string: favoriteItem?.volumeInfo.imageLinks?.smallThumbnail ?? "") else { return cell}
+        guard let url = URL(string: modalDataPasser?.volumeInfo.imageLinks?.smallThumbnail ?? "") else { return cell}
         let getDataTask = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data , error == nil else {
                 return

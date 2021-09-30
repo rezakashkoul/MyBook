@@ -18,7 +18,12 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var changeSearchButton: UIButton!
     //MARK:  Page Actions:
     @IBAction func textFieldValueChanged(_ sender: UITextField) {
-        doSearchActionWhileTyping()
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.doSearchActionWhileTyping()
+
+        }
+        
     }
     @IBAction func changeSearchButtonTapped(_ sender: Any) {
         if changeSearchButton.currentImage == UIImage(systemName: "person") {
@@ -135,18 +140,27 @@ class SearchViewController: UIViewController {
      This fuction makes the textField to perform the search when the text string characters are three or more than three. It also does some UI show/hide changes due to some conditions.
      */
     func doSearchActionWhileTyping() {
+        
+        
+        
         if self.searchTexField.text != nil {
             
-            if searchTexField.text == "" {
-                nothngLabel.isHidden = false
-                bookListTableView.isHidden = true
-                reloadTableView()
-            } else {
-                nothngLabel.isHidden = false
-                bookListTableView.isHidden = true
-                bookListTableView.isHidden = false
-                reloadTableView()
+            
+            DispatchQueue.main.async {
+                if self.searchTexField.text == "" {
+                    self.nothngLabel.isHidden = false
+                    self.bookListTableView.isHidden = true
+                    self.reloadTableView()
+                } else {
+                    self.nothngLabel.isHidden = false
+                    self.bookListTableView.isHidden = true
+                    self.bookListTableView.isHidden = false
+                    self.reloadTableView()
+                }
             }
+            
+            
+            
             if searchTexField.text!.count >= 3 {
                 getDataFromApi()
             }
@@ -177,7 +191,11 @@ class SearchViewController: UIViewController {
         let decoder = JSONDecoder()
         if let googleBooks = try? decoder.decode(BookModel.self, from: json) {
             books = googleBooks.items
-            reloadTableView()
+            
+            DispatchQueue.main.async {
+                self.reloadTableView()
+
+            }
         }
     }
 }
@@ -189,6 +207,7 @@ extension SearchViewController : UITextFieldDelegate {
         //textField code
         textField.resignFirstResponder()
         performSearch()
+        
         return true
     }
 }

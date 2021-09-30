@@ -4,6 +4,8 @@
 //
 //  Created by Reza Kashkoul on 6/31/1400 AP.
 //
+var modalDataPasser : Items?
+var favoriteCollection : [Items]?
 
 import UIKit
 
@@ -27,10 +29,16 @@ class BookDetailController: UIViewController , UIGestureRecognizerDelegate {
     @IBAction func addAndRemoveFavoriteButton(_ sender: Any) {
         //Passing Data to FavoriteVIewController
         let vc = storyboard?.instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
+        
+        
+        
         if let unWrappedSavedBookArray = chosenBookCellArray {
             if chosenBookCellArray != nil {
+                modalDataPasser = chosenBookCellArray
+                //favoriteCollection?.append(modalDataPasser!)
+
                 print("______________LOG = Not nil______________")
-                vc.favoriteItem = unWrappedSavedBookArray
+               // vc.favoriteList?.append(modalDataPasser!)
             }
             self.dismiss(animated: true, completion: nil)
         }
