@@ -21,14 +21,12 @@ class FavoriteViewController: UIViewController {
     
     //MARK:  Variables
     // FIXME: Needs to be implemented and also show the output in the tableView
-   // var favoriteItem : Items!
-     var favoriteList : [Items]?
+    // var favoriteItem : Items!
+    var favoriteList = [modalDataPasser]
     
     override func viewWillAppear(_ animated: Bool) {
         favoriteListTableView.reloadData()
     }
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +73,27 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.bookImage.image = UIImage(named: modalDataPasser?.volumeInfo.imageLinks?.smallThumbnail?.description ?? "")
         cell.titleDataLabel.text = modalDataPasser?.volumeInfo.title
-        cell.PageCountDataLabel.text = modalDataPasser?.volumeInfo.pageCount?.description
+        
+        
+        if modalDataPasser?.volumeInfo.pageCount?.description != nil {
+            cell.PageCountDataLabel.text = modalDataPasser?.volumeInfo.pageCount?.description
+        } else {
+            cell.pageCountStackView.isHidden = true
+        }
+        
+        if modalDataPasser?.volumeInfo.ratingCount?.description != nil {
+            cell.ratingCountDataLabel.text = modalDataPasser?.volumeInfo.ratingCount?.description
+        } else {
+            cell.ratingCountStackView.isHidden = true
+        }
+        if modalDataPasser?.volumeInfo.averageRating?.description != nil {
+            cell.avarageRatingDataLabel.text = modalDataPasser?.volumeInfo.averageRating?.description
+        } else {
+            cell.avarageRatingStackView.isHidden = true
+        }
+        
+        
+        
         cell.ratingCountDataLabel.text = modalDataPasser?.volumeInfo.ratingCount?.description
         cell.avarageRatingDataLabel.text = modalDataPasser?.volumeInfo.averageRating?.description
         
@@ -93,4 +111,31 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         getDataTask.resume()
         return cell
     }
+    
+    //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    //        if editingStyle == .delete {
+    //            favoriteList.remove(at: indexPath.row)
+    //            tableView.deleteRows(at: [indexPath], with: .fade)
+    //            //        } else if editingStyle == .insert {
+    //            //            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+    //            //        }
+    //        }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .normal, title: "Remove Item :(") { (action, view, completion) in
+            // Perform your action here
+            
+            completion(true)
+        }
+        
+        
+        deleteAction.image = UIImage(systemName: "minus.circle")
+        deleteAction.backgroundColor = UIColor.appColor(.borderColor)
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    
+    
+    
+    
 }

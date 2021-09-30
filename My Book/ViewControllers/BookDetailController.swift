@@ -30,8 +30,6 @@ class BookDetailController: UIViewController , UIGestureRecognizerDelegate {
         //Passing Data to FavoriteVIewController
         let vc = storyboard?.instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
         
-        
-        
         if let unWrappedSavedBookArray = chosenBookCellArray {
             if chosenBookCellArray != nil {
                 modalDataPasser = chosenBookCellArray
